@@ -77,9 +77,15 @@ class Formula(object):
 
     def get_master_formula(self, parsed_formulas):
         name = parsed_formulas['name']
-        master_formula = self.known_formulas[parsed_formulas['name']]()
-        if len(parsed_formulas['args'] > 1):
+        if len(parsed_formulas['args']) > 1:
+            master_formula = self.known_formulas[name]()
             master_formula_sub_formuals = self.create_sub_formula(master_formula, parsed_formulas['args'])
+        else:
+            for argumento in parsed_formulas['args'][0]:
+                print argumento
+            master_formula = self.known_formulas[name]
+            master_formula(argumento for argumento in parsed_formulas['args'][0])
+
         pass
 
     def create_sub_formula(master_formula, args):
@@ -89,12 +95,6 @@ class Formula(object):
             formula['name'] = arg['name']
             if len(arg['args'])>0:
                 formula = self.known_formulas[formula['name']]()
-                sub_formulas = create_sub_formula(formula, arg['args'])
-
-                
-    def get_sub_formulas(self, splitted_formula):
-        sub_formulas = {}
-        for item in splitted_formula:
-            if ')' in item:
-                item.split(',')
-                sub_formulas
+                sub_formula = create_sub_formula(formula, arg['args'])
+            else:
+                master_formula.values.append(sub_formula)

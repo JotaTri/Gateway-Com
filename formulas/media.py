@@ -8,15 +8,17 @@ class MED(object):
 
     def add_values(value):
         self.values.append(value)
-        
+
     def execute(self):
         pass
 
 class MED_T(object):
-    def __init__(self, **kwargs):
-        self.time_delta = kwargs['delta']
-        self.service_type = kwargs['service_type']
-        self.service_ids = kwargs['service_ids']
+    def __init__(self, *argv):
+        for arg in argv:
+            print arg
+        self.time_delta = argv[0]
+        self.service_type = argv[1]
+        self.service_ids = argv[2]
         self.master_formula = False
         print self.time_delta
         print self.service_type
