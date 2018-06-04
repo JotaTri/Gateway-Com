@@ -13,4 +13,4 @@ api.add_resource(Receiver, '/formula')
 #    return 'Hello World'
 
 if __name__ == '__main__':
-   app.run(host='0.0.0.0')
+   app.run(host='0.0.0.0', threaded=True)

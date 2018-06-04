@@ -10,6 +10,6 @@ class Receiver(Resource):
     def post(self):
         data = (request.get_json())
 
-        formula = Formula(data['formula'])
-        print formula
+        formula = Formula(data['formula'].encode('utf8'))
+        print 'fiiiiiiiiim'
         return {'status' :200, 'message': 'Formula Received and Recognized'}
