@@ -11,6 +11,12 @@ class Formula(object):
         self.formula = formula
         parsed_formulas, lixo = self.parse_formulas(formula)
         self.master_formula = self.get_master_formula(parsed_formulas)
+        print self.master_formula.time_delta
+        print type(self.master_formula.time_delta)
+        print self.master_formula.service_type
+        print type(self.master_formula.service_type)
+        print self.master_formula.service_ids
+        print type(self.master_formula.service_ids)
 
     def get_known_formulas(self):
         known_formulas = {}
@@ -81,12 +87,9 @@ class Formula(object):
             master_formula = self.known_formulas[name]()
             master_formula_sub_formuals = self.create_sub_formula(master_formula, parsed_formulas['args'])
         else:
-            for argumento in parsed_formulas['args'][0]:
-                print argumento
-            master_formula = self.known_formulas[name]
-            master_formula(argumento for argumento in parsed_formulas['args'][0])
+            master_formula = self.known_formulas[name](parsed_formulas['args'][0])
+        return master_formula
 
-        pass
 
     def create_sub_formula(master_formula, args):
         array_formulas = []
