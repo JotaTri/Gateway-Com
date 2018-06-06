@@ -8,6 +8,9 @@ api = Api(app)
 
 
 api.add_resource(Receiver, '/formula')
+
+
+
 # @app.route('/')
 # def hello_world():
 #    return 'Hello World'

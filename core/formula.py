@@ -6,17 +6,20 @@ import importlib
 
 class Formula(object):
 
-    def __init__(self, formula):
+    def __init__(self):
         self.known_formulas = self.get_known_formulas()
-        self.formula = formula
+        # parsed_formulas, lixo = self.parse_formulas(formula)
+        # self.master_formula = self.get_master_formula(parsed_formulas)
+        # print self.master_formula.time_delta
+        # print type(self.master_formula.time_delta)
+        # print self.master_formula.service_type
+        # print type(self.master_formula.service_type)
+        # print self.master_formula.service_ids
+        # print type(self.master_formula.service_ids)
+
+    def getFormula(self, formula):
         parsed_formulas, lixo = self.parse_formulas(formula)
-        self.master_formula = self.get_master_formula(parsed_formulas)
-        print self.master_formula.time_delta
-        print type(self.master_formula.time_delta)
-        print self.master_formula.service_type
-        print type(self.master_formula.service_type)
-        print self.master_formula.service_ids
-        print type(self.master_formula.service_ids)
+        return self.get_master_formula(parsed_formulas)
 
     def get_known_formulas(self):
         known_formulas = {}
@@ -70,23 +73,25 @@ class Formula(object):
         else:
             # print formula
             if formula[fechar+1:].find(')') == -1:
-                return formula[:formula.find(')')].split(','), True
+                return formula[:formula.find(')')].split(';'), True
             if formula[fechar:].find(')') == fechar + 1 or len(formula) == 1:
-                print('FOIIII') #Entra aqui?
+                print('OLHARRRRRRRRRRRRRRRRRRRRRRRRR') #Entra aqui?
                 return formula[formula.find(')'):], True
             if formula[formula.find(')')+1] == ',':
-                return formula[:formula.find(')')].split(','), True
+                return formula[:formula.find(')')].split(';'), True
             else:
-                return formula[:formula.find(')')].split(','), False
+                return formula[:formula.find(')')].split(';'), False
         # for char in formula:
         #     pass
 
     def get_master_formula(self, parsed_formulas):
         name = parsed_formulas['name']
         if len(parsed_formulas['args']) > 1:
+            #TODO
             master_formula = self.known_formulas[name]()
-            master_formula_sub_formuals = self.create_sub_formula(master_formula, parsed_formulas['args'])
+            master_formula_sub_formulas = self.create_sub_formula(master_formula, parsed_formulas['args'])
         else:
+            print parsed_formulas['args'][0]
             master_formula = self.known_formulas[name](parsed_formulas['args'][0])
         return master_formula
 

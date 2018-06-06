@@ -5,23 +5,22 @@ import os
 import time
 
 class RepeatingTimer(object):
-    def __init__(self, time_delta, topic, function):
+    def __init__(self, time_delta, function):
         self.time_delta = time_delta
-        self.topic = topic
         # self.services = services
         self.function = function
         print self.function
-        self.timer = Timer(self.time_delta, self.function_handler, [topic])
-        signal.signal(signal.SIGINT, self.cancel)
+        self.timer = Timer(self.time_delta, self.function_handler)
+        # signal.signal(signal.SIGINT, self.cancel)
         self.timer.start()
 
 
-    def function_handler(self, services):
-        self.function(self.topic, self.time_delta)
-        self.timer = Timer(self.time_delta, self.function_handler, [services])
+    def function_handler(self):
+        self.function()
+        self.timer = Timer(self.time_delta, self.function_handler)
         self.timer.start()
 
-    def cancel(self,ignal, frame):
+    def cancel(self):
         print 'foiiiiiiiiii'
         self.timer.cancel()
         time.sleep(0.5)
