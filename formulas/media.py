@@ -2,6 +2,8 @@ import numpy
 
 from core.timer import RepeatingTimer
 
+import sqlite3
+
 class MED(object):
     def __init__(self, **kwargs):
         print 'init funfado'
@@ -29,6 +31,11 @@ class MED_T(object):
     def configure(self, formula):
         pass
     def execute(self):
+        conn = sqlite3.connect('/home/jota/DB/uiot.db')
+        cursor = conn.cursor()
+        d = cursor.execute('SELECT data FROM data WHERE id < 10')
+        for item in d:
+            print item
         print 'Executando a Media dos servicos de nome ' + self.service_type + ' e dos servicos de ids ' + str(self.service_ids) +  ' a partir dos ultimos ' + str(self.time_delta) + ' minutos'
         print 'Executando o PUBLISH no topico:' + self.topico
         # return numpy.sum(values)/len(values)
