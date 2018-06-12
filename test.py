@@ -4,7 +4,7 @@ class C(object):
     def __init__(self, *argv):
         for arg in argv[0]:
             print arg
-formula = Formula().getFormula('MED_T(5;;[3])')
+formula = Formula().getFormula('MED_T(2;temp;)')
 formula.topico = 'recepcao/topico'
 # Formula('MED_T(5,,[3])')
 # A = {'C':C}
