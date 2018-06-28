@@ -6,6 +6,7 @@ import datetime
 
 import sqlite3
 
+# TODO
 class MAX(object):
     def __init__(self, **kwargs):
         print 'init funfado'
@@ -17,11 +18,17 @@ class MAX(object):
 
     def execute(self):
         pass
-
+# Classe que executa um servico de obtencao do valor maximo dos valores obtido por servicos
+# identificados em um periodo de tempo determinado
+#                                    --Paramentros--
+#         (1) time_delta: delta de tempo a ser executada a verificacao (em minutos) (not nullable)
+#         (2) service_type: array de tipos de servicos a serem verificados (nullable)
+#         (3) service_ids: array de ids de servicos a serem verificados (nullable)
+#                                    ---------------
 class MAX_T(object):
     def __init__(self, *argv):
         self.time_delta = int(argv[0][0])
-        self.service_type = argv[0][1]
+        self.service_type = argv[0][1].replace('[','').replace(']', '').split(',')
         self.service_ids = argv[0][2].replace('[','').replace(']', '').split(',')
         for arg in argv[0]:
             print arg
@@ -46,6 +53,8 @@ class MAX_T(object):
         # return numpy.sum(values)/len(values)
         print numpy.amax(values)
 
+
+#TODO
 class MAX_N(object):
     def __init__(self, **kwargs):
         pass

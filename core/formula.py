@@ -4,23 +4,23 @@ import inspect
 import importlib
 
 
+# Classe responsavel por criar uma isntancia de formula a partir dos dados recebidos
+# separando os parametros e identificando a formula e a instanciando a partir de
+# formulas ja reconhecidas (presentes na pasta 'formulas')
 class Formula(object):
 
     def __init__(self):
         self.known_formulas = self.get_known_formulas()
         # parsed_formulas, lixo = self.parse_formulas(formula)
         # self.master_formula = self.get_master_formula(parsed_formulas)
-        # print self.master_formula.time_delta
-        # print type(self.master_formula.time_delta)
-        # print self.master_formula.service_type
-        # print type(self.master_formula.service_type)
-        # print self.master_formula.service_ids
-        # print type(self.master_formula.service_ids)
 
     def getFormula(self, formula):
         parsed_formulas, lixo = self.parse_formulas(formula)
         return self.get_master_formula(parsed_formulas)
 
+    # Metodo que identifica todas as classes presentes nos arquivos da pasta
+    # 'formulas' e cria um dicionario contendo o nome da classe como key e a classe
+    # nao instanciada como valor
     def get_known_formulas(self):
         known_formulas = {}
         current_dir = os.path.join(os.path.dirname(os.path.abspath('formulas/*.py')))
@@ -37,6 +37,9 @@ class Formula(object):
                      known_formulas[member] = handler_class
         return known_formulas
 
+    # Metodo responsavel por fazer o parseamento da formula recebida, tendo como
+    # resultado um dicionario contendo o nome da formula e seus parametros, podendo
+    # esses paremetros serem outro dicionario de formulas
     def parse_formulas(self, formula):
         # print 'FORMULA=' + formula
         diciti = {'args':[]}
@@ -75,7 +78,7 @@ class Formula(object):
             if formula[fechar+1:].find(')') == -1:
                 return formula[:formula.find(')')].split(';'), True
             if formula[fechar:].find(')') == fechar + 1 or len(formula) == 1:
-                print('OLHARRRRRRRRRRRRRRRRRRRRRRRRR') #Entra aqui?
+                print('OLHARRRRRRRRRRRRRRRRRRRRRRRRR') #TODO Entra aqui?
                 return formula[formula.find(')'):], True
             if formula[formula.find(')')+1] == ',':
                 return formula[:formula.find(')')].split(';'), True
@@ -84,6 +87,10 @@ class Formula(object):
         # for char in formula:
         #     pass
 
+
+    # Metodo que cria uma isntancia da formula que e' identificada pelo seu nome
+    # passando seus respectivos parametros
+    # TODO formulas que contem formulas como parametros
     def get_master_formula(self, parsed_formulas):
         name = parsed_formulas['name']
         if len(parsed_formulas['args']) > 1:
